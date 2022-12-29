@@ -4,29 +4,16 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class Day1 extends Application {
     @Override
     public void start(Stage stage) throws IOException, InterruptedException {
-        String calories  = """
-                1000
-                2000
-                3000
-                                
-                4000
-                                
-                5000
-                6000
-                                
-                7000
-                8000
-                9000
-                                
-                10000
-                """;
         int mostCalories = 0;
         int totalCaloriesByElfCarrying = 0;
+
+        List<Integer> totalCaloriesCarryingbyElfArr = new ArrayList<>();
 
         try(InputStream inputStream = getClass().getClassLoader().getResourceAsStream("day1.txt")) {
             Scanner scanner = new Scanner(inputStream);
@@ -38,6 +25,7 @@ public class Day1 extends Application {
                         mostCalories = totalCaloriesByElfCarrying;
                     }
 
+                    totalCaloriesCarryingbyElfArr.add(totalCaloriesByElfCarrying);
                     totalCaloriesByElfCarrying = 0;
                 }
 
@@ -45,7 +33,10 @@ public class Day1 extends Application {
             }
         }
 
-        System.out.println(String.format("The most calories carrying by elf is: %s", mostCalories));
+        Collections.sort(totalCaloriesCarryingbyElfArr, Collections.reverseOrder());
+
+        int totalTopThreeCalories = totalCaloriesCarryingbyElfArr.get(0) + totalCaloriesCarryingbyElfArr.get(1) + totalCaloriesCarryingbyElfArr.get(2);
+        System.out.println(String.format("Top three calories carrying by elf: %s", totalTopThreeCalories));
         Thread.sleep(10000);
     }
 
