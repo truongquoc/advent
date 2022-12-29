@@ -7,15 +7,15 @@ import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.*;
 
-public class Day1 extends Application {
-    @Override
-    public void start(Stage stage) throws IOException, InterruptedException {
+public class Day1 {
+    public static void main(String[] args) throws InterruptedException {
+//        launch();
         int mostCalories = 0;
         int totalCaloriesByElfCarrying = 0;
 
         List<Integer> totalCaloriesCarryingbyElfArr = new ArrayList<>();
 
-        try(InputStream inputStream = getClass().getClassLoader().getResourceAsStream("day1.txt")) {
+        try(InputStream inputStream = Day1.class.getClassLoader().getResourceAsStream("day1.txt")) {
             Scanner scanner = new Scanner(inputStream);
 
             while(scanner.hasNextLine()) {
@@ -31,6 +31,8 @@ public class Day1 extends Application {
 
                 totalCaloriesByElfCarrying+= calo.trim().isBlank()? 0 : Integer.parseInt(calo);
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         Collections.sort(totalCaloriesCarryingbyElfArr, Collections.reverseOrder());
@@ -38,14 +40,5 @@ public class Day1 extends Application {
         int totalTopThreeCalories = totalCaloriesCarryingbyElfArr.get(0) + totalCaloriesCarryingbyElfArr.get(1) + totalCaloriesCarryingbyElfArr.get(2);
         System.out.println(String.format("Top three calories carrying by elf: %s", totalTopThreeCalories));
         Thread.sleep(10000);
-    }
-
-    public enum EnumTest {
-        ENTRY_1,
-        ENTRY_2
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }
